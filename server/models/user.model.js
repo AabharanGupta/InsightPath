@@ -20,6 +20,10 @@ const userSchema=new Schema({
         unique:true,
         sparse:true,                    //multiple null values possible                     
     },
+    savedContent:[{
+        type:Schema.Types.ObjectId,
+        ref:'Content'
+    }],
 },
 {
     timestamps:true,
