@@ -1,4 +1,4 @@
-import {Schema,mongoose} from 'mongoose';
+import {Schema,model} from 'mongoose';
 
 const contentSchema=new Schema({
     title:{
