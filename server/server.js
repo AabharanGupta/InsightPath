@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.routes.js';
 import contentRoutes from './routes/content.routes.js';
 import userRoutes from './routes/user.routes.js';
 import todoRoutes from './routes/todo.routes.js';
+import uploadRoutes from './routes/upload.routes.js';
 
 connectDB();
 
@@ -31,6 +32,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/content',contentRoutes);
 app.use('/api/users',userRoutes);
 app.use('/api/todos', todoRoutes);
+app.use('/api/uploads',uploadRoutes);
 
 app.get('/',(req,res)=>{
     res.send('API is running');
