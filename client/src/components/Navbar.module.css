@@ -1,0 +1,32 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.navLinks .navActions{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navLinks a, .userActions a, .logoutButton {
+  text-decoration: none;
+  color: #343a40;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.logoutButton {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  padding: 0;
+}
+
+.userName {
+  font-weight: bold;
+}

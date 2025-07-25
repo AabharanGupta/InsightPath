@@ -1,13 +1,35 @@
 import { Link } from 'react-router-dom';
+import styles from './Navbar.module.css'
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext.jsx';
 
 const Navbar = () => {
-  return (
-    <nav style={{ display: 'flex', gap: '1rem', padding: '1rem', background: '#f0f0f0' }}>
-      <Link to="/">Home</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/register">Register</Link>
-      <Link to="/dashboard">Dashboard</Link>
-    </nav>
-  );
+    const {userInfo,logout}=useContext(AuthContext);
+    return (
+      <nav className={styles.navbar}>
+        <div className={styles.navLinks}>
+          <Link to="/">Home</Link>
+          {userInfo && <Link to="/dashboard">Dashboard</Link>}     
+        </div>
+        
+        <div className={styles.userActions}>
+          {userInfo?(
+            <>
+              <span className={styles.userName}>Hello, {userInfo.name}</span>
+              <button onClick={logout} className={styles.logoutButton}>
+                Logout
+              </button>
+            </>
+          ):(
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
+          )
+          }
+        </div>
+        
+      </nav>
+    );
 };
 export default Navbar;
