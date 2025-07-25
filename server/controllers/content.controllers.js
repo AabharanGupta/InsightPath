@@ -9,20 +9,28 @@ export const createContent= async(req,res)=>{
         res.status(400).json({message:"Kindly input both the title and description"});
     }
     try{
-        const existingContent = await Content.findOne({
-         $or: [{ title }, { description }, { url: url ? url : null }],
-        });
+       const orConditions = [];
+        if (title) orConditions.push({ title });
+        if (description) orConditions.push({ description });
+        if (url) orConditions.push({ url });
+
+        if (orConditions.length > 0) {
+        const existingContent = await Content.findOne({ $or: orConditions });
         if (existingContent) {
-          return res.status(409).json({ message: 'This content already exists.' });
+            return res.status(409).json({ message: 'This content already exists.' });
         }
-        const content=new Content({
-            title,
-            description,
-            url,
-            author:req.user._id
-        })
-        const createdContent=await content.save();
-        res.send(201).json({message:"Content uploaded"});
+        }
+
+        const content = new Content({
+        title,
+        description,
+        url,
+        author: req.user._id,
+        });
+
+        const createdContent = await content.save();
+        res.status(201).json(createdContent);
+
     }
     catch(error){
         console.log(`Error in creation:${error}`);
