@@ -7,6 +7,7 @@ import './config/passport.config.js';
 import authRoutes from './routes/auth.routes.js';
 import contentRoutes from './routes/content.routes.js';
 import userRoutes from './routes/user.routes.js';
+import todoRoutes from './routes/todo.routes.js';
 
 connectDB();
 
@@ -29,6 +30,7 @@ app.use(passport.session());
 app.use('/api/auth', authRoutes);
 app.use('/api/content',contentRoutes);
 app.use('/api/users',userRoutes);
+app.use('/api/todos', todoRoutes);
 
 app.get('/',(req,res)=>{
     res.send('API is running');
