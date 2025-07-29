@@ -1,0 +1,68 @@
+.todoPage {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.todoItem:last-child {
+  border-bottom: none;
+}
+
+.todoText {
+  flex-grow: 1;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #adb5bd;
+}
+
+.deleteButton {
+  background: none;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+.addForm {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.addForm input {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+ .addForm button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

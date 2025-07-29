@@ -8,6 +8,7 @@ import RegisterPage from './pages/RegisterPage.jsx';
 import { AuthProvider } from '../context/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import App from './App.jsx'
+import TodoPage from './pages/ToDoPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,10 @@ const router = createBrowserRouter([
             path: 'dashboard',
             element: <DashboardPage />,
           },
-
+          {
+            path:'todos',
+            element:<TodoPage />
+          }
         ],
       },
     ],

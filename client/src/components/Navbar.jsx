@@ -10,6 +10,7 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.navLinks}>
         <Link to="/">Home</Link>
+        <Link to="/todos">To-Do List</Link> 
         {userInfo && <Link to="/dashboard">Dashboard</Link>}
       </div>
       <div className={styles.userActions}>
