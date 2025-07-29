@@ -9,29 +9,35 @@ import { AuthProvider } from '../context/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import App from './App.jsx'
 
-const router=createBrowserRouter([
+const router = createBrowserRouter([
   {
-    path:'/',
-    element:<Layout/>,
-    children:[
+    path: '/',
+    element: <Layout />,
+    children: [
       {
-        index:true,
-        element:<HomePage/>
-      },{
-        path:'login',
-        element:<LoginPage/>
-      },{
-        path:'register',
-        element:<RegisterPage/>
-      },{
-        element:<ProtectedRoute/>,
-        children:[
-        {
-        path:'dashboard',
-        element:<DashboardPage/>
+        index: true,
+        element: <HomePage />,
       },
-    ]}
-    ]
-  }
-])
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
+      {
+        path: 'register',
+        element: <RegisterPage />,
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: 'dashboard',
+            element: <DashboardPage />,
+          },
+
+        ],
+      },
+    ],
+  },
+]);
+
 export default router;
