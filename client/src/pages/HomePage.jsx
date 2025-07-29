@@ -1,5 +1,39 @@
+import { useState,useEffect } from "react";
+import axios from 'axios';
+import ContentCard from '../components/ContentCard.jsx';
+import styles from './HomePage.module.css';
+
 const HomePage=()=>{
-    return <h1>Home Page</h1>;
+    const [content,setContent]=useState([]);
+    const [loading,setLoading]=useState(true);
+    useEffect(()=>{
+        const fetchContent=async()=>{
+            try{
+                const {data}=await axios.get('/api/content');
+                setContent(data);    
+            }
+            catch(error){
+                console.error(`Failed to fetch :${error}`);
+            }
+            finally{
+                setLoading(false);
+            }
+        };
+        fetchContent();
+    },[]);
+
+    if(loading)
+        return <p>Loading page!!</p>;
+    return(
+        <div className={styles.homePage}>
+            <h1>Latest Content</h1>
+            <div className={styles.feed}>
+                {content.map((item) => (
+                <ContentCard key={item._id} content={item} />
+                    ))}
+            </div>
+        </div>
+    );    
 };
 
 export default HomePage;

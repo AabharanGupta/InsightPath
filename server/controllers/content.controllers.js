@@ -37,8 +37,29 @@ export const createContent= async(req,res)=>{
         res.status(500).json({message:"Server Error"});
     }
 };
+export const getAllcontent=async(req,res)=>{
+    try{
+        const content=await Content.find({}).populate('author','name');
+        res.json(content);
+    }
+    catch(error){
+        res.status(500).json({message:`Server Error`})
+    }
+}
+
 export const getContent=async(req,res)=>{
-    res.send('Get single content');
+    try{
+        const content=await Content.findById(req.params.id).populate('author','name');
+        if(!content){
+            return res.status(404).json({message:`Not Found`});
+        }
+        const comments=await Comment.find({content:req.params.id}).populate('author','name');
+        res.json({content,comments});
+    }
+    catch(error){
+        res.status(500).json({message:`Server Error`});
+        console.log(`Error in get content:${error}`);
+    }
 }
 
 export const likeContent=async(req,res)=>{

@@ -1,0 +1,46 @@
+.page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.contentHeader h1 {
+  margin-top: 0;
+}
+
+.author {
+  font-style: italic;
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+.contentBody {
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
+.commentsSection {
+    border-top: 1px solid #dee2e6;
+    padding-top: 2rem;
+}
+
+.comment {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.commentAuthor {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.commentForm textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    margin-bottom: 1rem;
+}
