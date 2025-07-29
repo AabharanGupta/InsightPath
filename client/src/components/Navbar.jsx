@@ -9,9 +9,14 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navLinks}>
-        <Link to="/">Home</Link>
-        <Link to="/todos">To-Do List</Link> 
-        {userInfo && <Link to="/dashboard">Dashboard</Link>}
+        <Link to="/">Home</Link> 
+        {userInfo && 
+        <>
+          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/todos">To-Do List</Link>
+          <Link to="/create-content">Create Post</Link>
+        </>
+        }
       </div>
       <div className={styles.userActions}>
         {userInfo ? (

@@ -10,6 +10,8 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import App from './App.jsx'
 import TodoPage from './pages/ToDoPage.jsx';
 import ContentDetailPage from './pages/Content DetailPage.jsx';
+import CreateContentPage from './pages/CreateContentPage.jsx';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -18,6 +20,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path:'content/:id',
+        element:<ContentDetailPage />
       },
       {
         path: 'login',
@@ -39,9 +45,9 @@ const router = createBrowserRouter([
             element:<TodoPage />
           },
           {
-            path:'content/:id',
-            element:<ContentDetailPage />
-          }
+            path:'create-content',
+            element:<CreateContentPage />
+          },
         ],
       },
     ],
