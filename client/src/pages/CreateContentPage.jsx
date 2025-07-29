@@ -5,20 +5,50 @@ import styles from './CreateContentPage.module.css'
 
 const CreateContentPage=()=>{
     const [formData,setFormData]=useState({title:'',description:'',url:''});
+    const [file,setFile]=useState(null);
+    const [uploading,setUploading]=useState(false);
     const navigate=useNavigate();
 
+    const handleFileChange=(e)=>{
+      setFile(e.target.files[0]);
+    };
     const handleChange=(e)=>{
         setFormData({...formData,[e.target.name]:e.target.value});
     };
     const handleSubmit=async(e)=>{
         e.preventDefault();
+        setUploading(true);
+
+        let fileUrl='';
+        if(file){
+          const uploadFormData= new FormData();
+          uploadFormData.append('file',file);
+          try{
+            const {data}=await api.post('/api/content',uploadFormData);
+            fileUrl=data.url;
+          }
+          catch(error){
+            console.log(`File upload failed: ${error}`);
+            alert('File upload unsuccessful');
+            setUploading(false);
+            return;
+          }
+        }
         try{
+            const contentData={
+              title:formData.title,
+              description:formData.description,
+              url:fileUrl,
+            }
             const {data:newContent}= await api.post('/api/content',formData);
             navigate(`/content/${newContent._id}`);
         }
         catch(error){
             console.log(`Failed to create content:${error}`);
             alert('Unable to upload content! Please retry ');   
+        }
+        finally{
+          setUploading(false);
         }
     }
     return (
@@ -48,7 +78,14 @@ const CreateContentPage=()=>{
           onChange={handleChange}
           placeholder="Link to resource (e.g., https://...)"
         />
-        <button type="submit">Create</button>
+        <input
+          type="file"
+          name="file"
+          onChange={handleFileChange}
+          style={{display: 'block', marginTop:'0.5rem'}}
+        />
+        <button type="submit" disabled={uploading}>Create</button>
+          {uploading?'Uploading....':'Create'};
       </form>
     </div>
   );
