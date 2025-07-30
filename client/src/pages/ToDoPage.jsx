@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
-import styles from './TodoPage.module.css';
+import styles from './ToDoPage.module.css';
 
 const TodoPage = () => {
   const [todos, setTodos] = useState([]);
