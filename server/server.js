@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
 import 'dotenv/config'
@@ -24,6 +25,7 @@ const io=new Server(httpServer,{
     },
 });
 
+app.use(cors())
 app.use(express.json());
 
 app.use(
@@ -65,6 +67,7 @@ io.on('connection',async(socket)=>{
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 //Routes
 app.use('/api/auth', authRoutes);
