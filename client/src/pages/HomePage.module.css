@@ -1,11 +1,28 @@
-.homePage {
+
+.homePage, .dashboard {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 2rem;
 }
 
-.feed {
+.feed, .grid { 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+}
+
+
+@media (max-width: 768px) {
+    .homePage, .dashboard {
+        padding: 0 1rem;
+        margin: 1rem auto;
+    }
+    .feed, .grid {
+        
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+    }
+    .header h1, .section h2 {
+        font-size: 1.5rem;
+    }
 }

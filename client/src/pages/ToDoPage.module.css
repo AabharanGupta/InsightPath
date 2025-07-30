@@ -47,6 +47,7 @@
 
 .addForm {
     display: flex;
+    flex-wrap: wrap; 
     gap: 1rem;
     margin-top: 1rem;
 }
@@ -56,6 +57,7 @@
     padding: 0.5rem;
     border: 1px solid #ced4da;
     border-radius: 5px;
+    min-width: 150px;
 }
 
  .addForm button {
@@ -65,4 +67,18 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .todoPage {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    .addForm {
+        flex-direction: column; 
+    }
+    .addForm input, .addForm button {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }

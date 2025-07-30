@@ -14,12 +14,13 @@
   border: 1px solid #ced4da;
   border-radius: 5px;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
 .formButton {
   width: 100%;
   padding: 0.75rem 1.5rem;
-  background-color: var(--bright-blue); 
+  background-color: var(--bright-blue);
   color: var(--white);
   border: none;
   border-radius: 5px;
@@ -30,5 +31,13 @@
 }
 
 .formButton:hover {
-    background-color: #178dde; 
+    background-color: #178dde;
+}
+
+
+@media (max-width: 768px) {
+    .formContainer {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
 }

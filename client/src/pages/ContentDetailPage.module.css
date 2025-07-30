@@ -3,7 +3,6 @@
   margin: 2rem auto;
   padding: 2rem;
 }
-
 .contentHeader h1 {
   margin-top: 0;
 }
@@ -43,4 +42,19 @@
     border-radius: 5px;
     border: 1px solid #ced4da;
     margin-bottom: 1rem;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap */
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+@media (max-width: 768px) {
+    .page {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
 }

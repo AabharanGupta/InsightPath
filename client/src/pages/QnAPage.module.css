@@ -28,3 +28,12 @@
 .questionText {
   margin: 0.5rem 0 0 0;
 }
+@media (max-width: 768px) {
+    .page {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    .page h1 {
+        font-size: 1.75rem;
+    }
+}
