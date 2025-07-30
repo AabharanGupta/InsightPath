@@ -31,12 +31,12 @@ const TodoPage = () => {
 
   const toggleComplete = async (id) => {
     const todo = todos.find((t) => t._id === id);
-    const { data: updatedTodo } = await api.put(`/api/todos/${id}`, { completed: !todo.completed });
+    const { data: updatedTodo } = await api.put(`/todos/${id}`, { completed: !todo.completed });
     setTodos(todos.map((t) => (t._id === id ? updatedTodo : t)));
   };
 
   const deleteTodo = async (id) => {
-    await api.delete(`/api/todos/${id}`);
+    await api.delete(`/todos/${id}`);
     setTodos(todos.filter((t) => t._id !== id));
   };
 

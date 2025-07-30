@@ -15,6 +15,7 @@ const Navbar = () => {
           </Link>
           <div className={styles.navLinks}>
             <Link to="/qna">Q&A</Link>
+            <Link to="/todos">Todos</Link>
           </div>
         </div>
 

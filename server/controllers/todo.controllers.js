@@ -40,6 +40,6 @@ export const deleteTodo=async(req,res)=>{
     if(todo.user.toString()!=req.user.id){
         res.status(401).json({message:"You are not authorized" });
     }
-    await todo.remove();
+    await todo.deleteOne();
     res.json({message:'To do has been successfully removed'});
 };
