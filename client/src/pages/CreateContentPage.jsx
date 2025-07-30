@@ -15,42 +15,41 @@ const CreateContentPage=()=>{
     const handleChange=(e)=>{
         setFormData({...formData,[e.target.name]:e.target.value});
     };
-    const handleSubmit=async(e)=>{
-        e.preventDefault();
-        setUploading(true);
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setUploading(true);
 
-        let fileUrl='';
-        if(file){
-          const uploadFormData= new FormData();
-          uploadFormData.append('file',file);
-          try{
-            const {data}=await api.post('/api/content',uploadFormData);
-            fileUrl=data.url;
-          }
-          catch(error){
-            console.log(`File upload failed: ${error}`);
-            alert('File upload unsuccessful');
-            setUploading(false);
-            return;
-          }
-        }
-        try{
-            const contentData={
-              title:formData.title,
-              description:formData.description,
-              url:fileUrl,
-            }
-            const {data:newContent}= await api.post('/api/content',formData);
-            navigate(`/content/${newContent._id}`);
-        }
-        catch(error){
-            console.log(`Failed to create content:${error}`);
-            alert('Unable to upload content! Please retry ');   
-        }
-        finally{
+      let fileUrl = '';
+      if (file) {
+        const uploadFormData = new FormData();
+        uploadFormData.append('file', file);
+        try {
+          const { data } = await api.post('/uploads', uploadFormData); // ✅ Fix here
+          fileUrl = data.url;
+        } catch (error) {
+          console.log(`File upload failed: ${error}`);
+          alert('File upload unsuccessful');
           setUploading(false);
+          return;
         }
-    }
+      }
+
+      try {
+        const contentData = {
+          title: formData.title,
+          description: formData.description,
+          url: fileUrl || formData.url,
+        };
+        const { data: newContent } = await api.post('/content', contentData);
+        navigate(`/content/${newContent._id}`);
+      } catch (error) {
+        console.log(`Failed to create content: ${error}`);
+        alert('Unable to upload content! Please retry');
+      } finally {
+        setUploading(false);
+      }
+    };
+
     return (
     <div className={styles.page}>
       <h1>Create New Content</h1>

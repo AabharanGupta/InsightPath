@@ -4,7 +4,7 @@ import Comment from "../models/comment.model.js";
 
 export const createContent= async(req,res)=>{
     const {title,description,url}=req.body;
-
+    
     if(!title||!description){
         res.status(400).json({message:"Kindly input both the title and description"});
     }
