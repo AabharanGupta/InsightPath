@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Input from "../components/Inputs.jsx";
+import styles from '../components/Form.module.css';
 
 const RegisterPage=()=>{
     const [formData,setFormData]=useState({
@@ -27,9 +28,9 @@ const RegisterPage=()=>{
         }
     };
     return(
-        <div style={{padding: '2rem'}}>
+        <div className={styles.formContainer}>
             <h1>Register</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <Input
                     label="Name"
                     name="name"
@@ -51,7 +52,7 @@ const RegisterPage=()=>{
                     onChange={handleChange}
                 />
                 {error &&<p style={{color:'red'}}>{error}</p>}
-                <button type="submit" style={{padding:'0.75rem 1.5rem'}}>
+                <button type="submit" className={styles.formButton}>
                     Register
                 </button>
             </form>

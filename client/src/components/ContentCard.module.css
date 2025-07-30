@@ -1,5 +1,5 @@
 .card {
-  background-color: white;
+  background-color: var(--white);
   border: 1px solid #e9ecef;
   border-radius: 8px;
   padding: 1.5rem;
@@ -16,10 +16,11 @@
 }
 
 .card h3 {
+  color: var(--charcoal-black); /* Use variable */
   margin-top: 0;
 }
 
 .author {
   font-size: 0.9rem;
-  color: #6c757d;
+  color: var(--gray); /* Use variable */
 }

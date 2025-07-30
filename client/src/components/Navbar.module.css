@@ -3,8 +3,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
+  background-color: var(--navy-blue); /* Use variable */
+  color: var(--white);
 }
 
 .navLinks, .userActions {
@@ -15,9 +15,14 @@
 
 .navLinks a, .userActions a, .logoutButton {
   text-decoration: none;
-  color: #343a40;
+  color: var(--white); /* Use variable */
   font-weight: 500;
   cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.navLinks a:hover, .userActions a:hover, .logoutButton:hover {
+    opacity: 0.8;
 }
 
 .logoutButton {
@@ -29,4 +34,5 @@
 
 .userName {
   font-weight: bold;
+  color: var(--light-blue); /* Use variable */
 }

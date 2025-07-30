@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import Input from '../components/Inputs.jsx';
+import styles from '../components/Form.module.css';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -28,7 +29,7 @@ const LoginPage = () => {
   return (
     <div style={{ padding: '2rem' }}>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <Input
           label="Email Address"
           type="email"
@@ -44,7 +45,7 @@ const LoginPage = () => {
           onChange={handleChange}
         />
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit" style={{ padding: '0.75rem 1.5rem' }}>
+        <button type="submit" className={styles.formButton}>
           Login
         </button>
       </form>
