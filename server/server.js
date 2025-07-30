@@ -9,10 +9,20 @@ import contentRoutes from './routes/content.routes.js';
 import userRoutes from './routes/user.routes.js';
 import todoRoutes from './routes/todo.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
+import { Server } from 'socket.io';
+import http from 'http';
+import Question from './models/question.model.js'; 
 
 connectDB();
 
 const app=express();
+const httpServer=http.createServer(app);
+const io=new Server(httpServer,{
+    cors:{
+        origin: 'http://localhost:5173',
+        methods:['GET','POST'],
+    },
+});
 
 app.use(express.json());
 
@@ -23,6 +33,35 @@ app.use(
         saveUninitialized:false,
     })
 );
+
+io.on('connection',async(socket)=>{
+    console.log('A user connected:',socket.id);
+    try {
+    const questions = await Question.find({}).populate('author', 'name').sort({ createdAt: -1 });
+    socket.emit('load_questions', questions);
+  } catch (error) {
+    console.error('Error fetching questions:', error);
+  }
+  socket.on('new_question', async (data) => {
+    try {
+      // Save the new question to the database
+      const question = new Question({
+        text: data.text,
+        author: data.authorId,
+      });
+      const savedQuestion = await question.save();
+      const populatedQuestion = await Question.findById(savedQuestion._id).populate('author', 'name');
+
+      // Broadcast the new question to all connected clients
+      io.emit('question_created', populatedQuestion);
+    } catch (error) {
+      console.error('Error saving question:', error);
+    }
+  });
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -39,4 +78,4 @@ app.get('/',(req,res)=>{
 });
 
 const PORT=process.env.PORT||5001;
-app.listen(PORT,()=>console.log(`Server is running on ${PORT}`));
+httpServer.listen(PORT, () => console.log(`Server running on port ${PORT}`));

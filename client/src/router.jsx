@@ -11,6 +11,7 @@ import App from './App.jsx'
 import TodoPage from './pages/ToDoPage.jsx';
 import ContentDetailPage from './pages/Content DetailPage.jsx';
 import CreateContentPage from './pages/CreateContentPage.jsx';
+import QnAPage from './pages/QnAPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: 'register',
         element: <RegisterPage />,
+      },
+      {
+        path:'qna',
+        element:<QnAPage />,
       },
       {
         element: <ProtectedRoute />,
