@@ -24,7 +24,7 @@ const TodoPage = () => {
   const addTodo = async (e) => {
     e.preventDefault();
     if (!text.trim()) return;
-    const { data: newTodo } = await api.post('/api/todos', { text });
+    const { data: newTodo } = await api.post('/todos', { text });
     setTodos([...todos, newTodo]);
     setText('');
   };

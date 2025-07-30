@@ -1,79 +1,133 @@
-import {useState, useEffect,useContext} from'react';
+import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import api from '../services/api.js'
-import {AuthContext} from '../../context/AuthContext.jsx'
-import styles from './ContentDetailPage.module.css'
+import api from '../services/api.js';
+import { AuthContext } from '../../context/AuthContext.jsx';
+import styles from './ContentDetailPage.module.css';
 
-const ContentDetailPage=()=>{
-    const {id}=useParams();
-    const {userInfo}=useContext(AuthContext);
-    const [data,setdata]=useState({content:null,comments:[]});
-    const [newComment,setnewComment]=useState('');
-    const [loading,setloading]=useState(true);
+const ContentDetailPage = () => {
+  const { id } = useParams();
+  const { userInfo } = useContext(AuthContext);
 
-    useEffect(()=>{
-        const fetchData=async()=>{
-            try{
-                const {data:responseData}=await axios.get(`/api/content/${id}`);
-                setdata(responseData);
-            }
-            catch(error){
-                console.log(`Failed to fetch:${error}`);
-            }
-            finally{
-                setloading(false);
-            }
+  const [data, setData] = useState({ content: null, comments: [] });
+  const [newComment, setNewComment] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: responseData } = await axios.get(`/api/content/${id}`);
+        setData(responseData);
+
+        // Like state
+        if (userInfo && responseData.content.likes.includes(userInfo._id)) {
+          setIsLiked(true);
         }
-        fetchData();
-    },[id]);
-    const handleOnSubmit=async (e)=>{
-        e.preventDefault();
-        try{
-            const {data:addedComment}=await axios.post(`/api/content/${id}/comments`, { text: newComment });
-            addedComment.author={name:userInfo.name};
-            setData({ ...data, comments: [...data.comments, addedComment] });
-            setNewComment('');
-        }
-        catch(error){
-            console.log(`On Submit error:${error}`);
-        }
+        setLikeCount(responseData.content.likes.length);
+      } catch (error) {
+        console.error('Failed to fetch content details', error);
+      } finally {
+        setLoading(false);
+      }
     };
-    if(loading)
-        return <p>Loading Content!!!</p>;
-    if(!data.content)
-        return <p>Content Not Found!!</p>;
-     return (
+    fetchData();
+  }, [id, userInfo]);
+
+  const handleLike = async () => {
+    try {
+      const { data: updatedContent } = await api.post(`/content/${id}/like`);
+      setIsLiked(updatedContent.likes.includes(userInfo._id));
+      setLikeCount(updatedContent.likes.length);
+    } catch (error) {
+      console.error('Failed to like content', error);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      await api.post(`/content/${id}/save`);
+      alert('Content save status updated!');
+    } catch (error) {
+      console.error('Failed to save content', error);
+    }
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+    try {
+      const { data: addedComment } = await api.post(`/content/${id}/comments`, { text: newComment });
+      addedComment.author = { name: userInfo.name };
+      setData({ ...data, comments: [...data.comments, addedComment] });
+      setNewComment('');
+    } catch (error) {
+      console.error('Failed to post comment', error);
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (!data.content) return <p>Content not found.</p>;
+
+  return (
     <div className={styles.page}>
-        <div className={styles.contentHeader}>
-            <h1>{data.content.title}</h1>
-            <p className={styles.author}>By: {data.content.author?.name || 'Unknown'}</p>
+      <div className={styles.contentHeader}>
+        <h1>{data.content.title}</h1>
+        <p className={styles.author}>By: {data.content.author?.name || 'Unknown'}</p>
+
+        {/* --- Like & Save Buttons --- */}
+        {userInfo ? (
+          <div className={styles.actions}>
+            <button onClick={handleLike} className={styles.likeButton}>
+              {isLiked ? '❤️ Liked' : '🤍 Like'} ({likeCount})
+            </button>
+            <button onClick={handleSave} className={styles.saveButton}>
+              💾 Save
+            </button>
+          </div>
+        ) : (
+          <div className={styles.loginPrompt}>
+            <p><Link to="/login">Log in</Link> to like or save this content.</p>
+          </div>
+        )}
       </div>
+
       <div className={styles.contentBody}>
         <p>{data.content.description}</p>
-      </div>
-      <div className={styles.commentsSection}>
-        <h3>Comments</h3>
-        {data.comments.map((comment) => (
-          <div key={comment._id} className={styles.comment}>
-            <p className={styles.commentAuthor}>{comment.author?.name || 'User'}</p>
-            <p>{comment.text}</p>
-          </div>
-        ))}
-        {userInfo && (
-          <form onSubmit={handleCommentSubmit} className={styles.commentForm}>
-            <textarea
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Write a comment..."
-              required
-            ></textarea>
-            <button type="submit">Post Comment</button>
-          </form>
+        {data.content.url && (
+          <a href={data.content.url} target="_blank" rel="noopener noreferrer">View Resource</a>
         )}
+      </div>
+
+      {/* --- Comments Form --- */}
+      {userInfo ? (
+        <form onSubmit={handleCommentSubmit} className={styles.commentForm}>
+          <textarea
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Write a comment..."
+            required
+          ></textarea>
+          <button
+            type="submit"
+            disabled={!newComment.trim()}
+            className={styles.commentSubmitButton}
+          >
+            Post Comment
+          </button>
+        </form>
+      ) : (
+        <div className={styles.loginPrompt}>
+          <p>Please <Link to="/login">log in</Link> to join the discussion.</p>
         </div>
+      )}
+
+      {/* You can optionally render comments below */}
     </div>
-    )
+  );
 };
 
 export default ContentDetailPage;

@@ -1,28 +1,44 @@
 .dashboard {
-  padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.header p {
+  margin: 0.5rem 0 0;
+  font-size: 1.1rem;
+  color: var(--gray);
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
-.list {
-  background-color: #f8f9fa;
-  padding: 1.5rem;
+.emptyState {
+  background-color: var(--light-blue);
+  padding: 2rem;
   border-radius: 8px;
-}
-
-.list h2 {
-  margin-top: 0;
-  border-bottom: 2px solid #dee2e6;
-  padding-bottom: 0.5rem;
-}
-
-.contentItem {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #e9ecef;
+  text-align: center;
+  color: var(--gray);
 }

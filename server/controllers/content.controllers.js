@@ -62,14 +62,73 @@ export const getContent=async(req,res)=>{
     }
 }
 
-export const likeContent=async(req,res)=>{
-    res.send('Like the content');
-}
+export const likeContent = async (req, res) => {
+  try {
+    const content = await Content.findById(req.params.id);
+    if (!content) {
+      return res.status(404).json({ message: 'Content not found' });
+    }
+    const index = content.likes.indexOf(req.user.id);
 
-export const saveContent=async(req,res)=>{
-    res.send('Save the content');
-}
+    if (index === -1) {
+      content.likes.push(req.user.id);
+    } else {
+      content.likes.splice(index, 1);
+    }
 
-export const addComment=async(req,res)=>{
-    res.send('Add comment');
-}
+    await content.save();
+    res.json(content);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+export const saveContent = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const content = await Content.findById(req.params.id);
+
+    if (!content) {
+      return res.status(404).json({ message: 'Content not found' });
+    }
+
+    const index = user.savedContent.indexOf(content._id);
+    if (index === -1) {
+      user.savedContent.push(content._id);
+    } else {
+      user.savedContent.splice(index, 1);
+    }
+
+    await user.save();
+    res.json({ message: 'Content save status updated.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+export const addComment = async (req, res) => {
+  const { text } = req.body;
+  if (!text) {
+    return res.status(400).json({ message: 'Comment text is required' });
+  }
+
+  try {
+    const content = await Content.findById(req.params.id);
+    if (!content) {
+      return res.status(404).json({ message: 'Content not found' });
+    }
+
+    const comment = new Comment({
+      text,
+      author: req.user.id,
+      content: req.params.id,
+    });
+
+    const createdComment = await comment.save();
+    const populatedComment = await Comment.findById(createdComment._id).populate('author', 'name');
+
+    res.status(201).json(populatedComment);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
