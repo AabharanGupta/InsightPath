@@ -41,3 +41,33 @@
         padding: 1.5rem;
     }
 }
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+  color: #ccc;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.divider:not(:empty)::before {
+  margin-right: .25em;
+}
+
+.divider:not(:empty)::after {
+  margin-left: .25em;
+}
+
+.googleButton {
+  background-color: #4285F4; /* Google's blue */
+}
+
+.googleButton:hover {
+  background-color: #357ae8;
+}
