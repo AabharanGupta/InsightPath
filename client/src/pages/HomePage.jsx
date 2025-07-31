@@ -7,9 +7,10 @@ const HomePage=()=>{
     const [content,setContent]=useState([]);
     const [loading,setLoading]=useState(true);
     useEffect(()=>{
+        const API_URL=import.meta.env.VITE_API_URL;
         const fetchContent=async()=>{
             try{
-                const {data}=await axios.get('/api/content');
+                const {data}=await axios.get(`${API_URL}/content`);
                 setContent(data);    
             }
             catch(error){

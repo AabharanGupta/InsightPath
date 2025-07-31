@@ -24,7 +24,7 @@ const CreateContentPage=()=>{
         const uploadFormData = new FormData();
         uploadFormData.append('file', file);
         try {
-          const { data } = await api.post('/uploads', uploadFormData); // ✅ Fix here
+          const { data } = await api.post('/uploads', uploadFormData); 
           fileUrl = data.url;
         } catch (error) {
           console.log(`File upload failed: ${error}`);

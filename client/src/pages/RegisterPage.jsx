@@ -15,11 +15,12 @@ const RegisterPage=()=>{
     const handleChange=(e)=>{
        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+    const API_URL=import.meta.env.VITE_API_URL;
     const handleSubmit=async (e)=>{
         e.preventDefault();
         setError('');
         try{
-            const response=await axios.post('/api/auth/register',formData);
+            const response=await axios.post(`${API_URL}/auth/register`,formData);
             console.log('Registration Info:',response.data);
             navigate('/login');
         }

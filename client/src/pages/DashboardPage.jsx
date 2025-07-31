@@ -11,9 +11,9 @@ const DashboardPage=()=>{
         const fetchData=async()=>{
             try{
                 const [savedRes, likedRes, commentedRes]= await Promise.all([
-                    api.get('/users/profile/saved'),
-                    api.get('/users/profile/liked'),
-                    api.get('/users/profile/commented'),
+                    api.get(`/users/profile/saved`),
+                    api.get(`/users/profile/liked`),
+                    api.get(`/users/profile/commented`),
                 ]);
                 setData({
                     saved: savedRes.data,
@@ -42,7 +42,6 @@ const DashboardPage=()=>{
         <h1>Your Dashboard</h1>
         <p>An overview of your activity and saved content.</p>
       </div>
-       { console.log('Backend base URL:', import.meta.env.VITE_API_URL)}
 
       <div className={styles.section}>
         <h2>Saved Content</h2>
