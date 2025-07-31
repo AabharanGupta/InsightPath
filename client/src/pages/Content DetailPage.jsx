@@ -16,11 +16,12 @@ const ContentDetailPage = () => {
 
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const API_URL =import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: responseData } = await axios.get(`/api/content/${id}`);
+        const { data: responseData } = await axios.get(`${API_URL}/api/content/${id}`);
         setData(responseData);
 
         // Like state
@@ -39,7 +40,7 @@ const ContentDetailPage = () => {
 
   const handleLike = async () => {
     try {
-      const { data: updatedContent } = await api.post(`/content/${id}/like`);
+      const { data: updatedContent } = await api.post(`${API_URL}/content/${id}/like`);
       setIsLiked(updatedContent.likes.includes(userInfo._id));
       setLikeCount(updatedContent.likes.length);
     } catch (error) {
@@ -49,7 +50,7 @@ const ContentDetailPage = () => {
 
   const handleSave = async () => {
     try {
-      await api.post(`/content/${id}/save`);
+      await api.post(`${API_URL}/content/${id}/save`);
       alert('Content save status updated!');
     } catch (error) {
       console.error('Failed to save content', error);
@@ -60,7 +61,7 @@ const ContentDetailPage = () => {
     e.preventDefault();
     if (!newComment.trim()) return;
     try {
-      const { data: addedComment } = await api.post(`/content/${id}/comments`, { text: newComment });
+      const { data: addedComment } = await api.post(`${API_URL}/content/${id}/comments`, { text: newComment });
       addedComment.author = { name: userInfo.name };
       setData({ ...data, comments: [...data.comments, addedComment] });
       setNewComment('');
