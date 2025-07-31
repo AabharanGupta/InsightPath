@@ -11,9 +11,9 @@ const DashboardPage=()=>{
         const fetchData=async()=>{
             try{
                 const [savedRes, likedRes, commentedRes]= await Promise.all([
-                    api.get(`/users/profile/saved`),
-                    api.get(`/users/profile/liked`),
-                    api.get(`/users/profile/commented`),
+                    api.get(`api/users/profile/saved`),
+                    api.get(`api/users/profile/liked`),
+                    api.get(`api/users/profile/commented`),
                 ]);
                 setData({
                     saved: savedRes.data,

@@ -10,7 +10,7 @@ const HomePage=()=>{
         const API_URL=import.meta.env.VITE_API_URL;
         const fetchContent=async()=>{
             try{
-                const {data}=await api.get(`${API_URL}/content`);
+                const {data}=await api.get(`${API_URL}/api/content`);
                 setContent(data);    
             }
             catch(error){
