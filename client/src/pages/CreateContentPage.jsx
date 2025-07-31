@@ -24,7 +24,7 @@ const CreateContentPage=()=>{
         const uploadFormData = new FormData();
         uploadFormData.append('file', file);
         try {
-          const { data } = await api.post('/uploads', uploadFormData); 
+          const { data } = await api.post('/api/uploads', uploadFormData); 
           fileUrl = data.url;
         } catch (error) {
           console.log(`File upload failed: ${error}`);
@@ -40,7 +40,7 @@ const CreateContentPage=()=>{
           description: formData.description,
           url: fileUrl || formData.url,
         };
-        const { data: newContent } = await api.post('/content', contentData);
+        const { data: newContent } = await api.post('/api/content', contentData);
         navigate(`/content/${newContent._id}`);
       } catch (error) {
         console.log(`Failed to create content: ${error}`);
