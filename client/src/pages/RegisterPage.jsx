@@ -1,5 +1,5 @@
 import { useState } from "react"; 
-import axios from 'axios';
+import api from '../services/api.js';
 import { useNavigate } from "react-router-dom";
 import Input from "../components/Inputs.jsx";
 import styles from '../components/Form.module.css';

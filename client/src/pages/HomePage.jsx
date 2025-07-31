@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import axios from 'axios';
+import api from '../services/api.js';
 import ContentCard from '../components/ContentCard.jsx';
 import styles from './HomePage.module.css';
 
@@ -10,7 +10,7 @@ const HomePage=()=>{
         const API_URL=import.meta.env.VITE_API_URL;
         const fetchContent=async()=>{
             try{
-                const {data}=await axios.get(`${API_URL}/content`);
+                const {data}=await api.get(`${API_URL}/content`);
                 setContent(data);    
             }
             catch(error){
