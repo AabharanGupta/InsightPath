@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import {AuthContext} from '../../context/AuthContext.jsx';
 import styles from './QnAPage.module.css';
 
-const socket = io('http://localhost:5001');
+const socket = io(import.meta.env.VITE_API_URI_WITHOUT_API);
 
 const QnAPage=()=>{
     const {userInfo}=useContext(AuthContext);
