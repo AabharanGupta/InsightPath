@@ -25,6 +25,9 @@ const LoginPage = () => {
       setError(err.response?.data?.message || 'Login failed.');
     }
   };
+  const handleGoogleLogin = () => {
+    window.location.href = 'https://insightpath-production.up.railway.app/api/auth/google';
+  };
 
   return (
     <div style={{ padding: '2rem' }}>
@@ -49,6 +52,12 @@ const LoginPage = () => {
           Login
         </button>
       </form>
+      <div className={styles.divider}>
+        <span>OR</span>
+      </div>
+      <button onClick={handleGoogleLogin} className={`${styles.formButton} ${styles.googleButton}`}>
+        Login with Google
+      </button>
     </div>
   );
 };
